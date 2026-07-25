@@ -1,0 +1,111 @@
+# Tests
+
+## Test 1 - Portfolio loads with hero header [sanity]
+Viewport: desktop
+Description: Verify the portfolio app loads and displays the hero section with name and tagline.
+
+Steps:
+1. Navigate to the app
+2. Wait for page to fully load
+3. Look for the main title, subtitle, and tagline
+
+Expected: Hero section with "@thomas_young113" title, "Web3 Builder • Mobile-First Developer" subtitle, and "Building decentralized systems and AI tools from Termux" tagline are visible.
+
+## Test 2 - Featured Work section renders
+Viewport: desktop
+Description: Verify the Featured Work showcase displays 3 featured projects.
+
+Steps:
+1. Navigate to the app
+2. Scroll down to the Featured section
+3. Check for project cards with icons, titles, descriptions, and tags
+
+Expected: Featured section is visible with 3 projects (ContentBot, Arch Oracle, Word of the Day Bot) displayed with icons and tags.
+
+## Test 3 - About section renders
+Viewport: desktop
+Description: Verify the About section is visible with bio content.
+
+Steps:
+1. Navigate to the app
+2. Scroll down to the About section
+3. Read the bio paragraphs and benefit cards
+
+Expected: About section shows "Rooted in Code. Built for You." header, bio paragraph, and 3 benefit cards (Mobile-First, Production Ready, AI-Integrated).
+
+## Test 4 - Web3 Projects load
+Viewport: desktop
+Description: Verify all 8 Web3 projects are displayed.
+
+Steps:
+1. Navigate to the app
+2. Scroll to Web3 Projects section
+3. Count the project cards
+
+Expected: All 8 project cards (Ozak AI, MultiDeploy, Smart Contract Scanner, TweetStudio, Web3 Newsletter Generator, Pitch Read, Court Line, Convallax AMM Bot) are visible with tags, year badges, and links where applicable.
+
+## Test 5 - Project links open in new tab
+Viewport: desktop
+Description: Verify project links have correct attributes.
+
+Steps:
+1. Navigate to the app
+2. Scroll to a project with a link (e.g. MultiDeploy)
+3. Inspect the link element
+
+Expected: Links have `target="_blank"` and `rel="noopener noreferrer"` attributes.
+
+## Test 6 - Why Choose Me section renders
+Viewport: desktop
+Description: Verify the Why Choose Me section shows all selling points.
+
+Steps:
+1. Navigate to the app
+2. Look for "Why Choose Me?" heading
+3. Check all 5 cards
+
+Expected: Section displays 5 cards: Deep Expertise, Proven Track Record, Community Focused, Mobile Innovation, Fast Shipping.
+
+## Test 7 - Newsletter form works
+Viewport: desktop
+Description: Verify newsletter subscription form is interactive.
+
+Steps:
+1. Navigate to the app
+2. Scroll to Stay Updated section
+3. Type an email and click Subscribe
+
+Expected: Email input accepts text, Subscribe button is clickable, and feedback message appears after submission.
+
+## Test 8 - Contact section has working social links
+Viewport: desktop
+Description: Verify contact section displays with social media links.
+
+Steps:
+1. Navigate to the app
+2. Click the "Get in Touch" button in the hero section
+3. Look at contact links
+
+Expected: Page scrolls to the Contact section and shows 3 links (X/Twitter, GitHub, Telegram) that are clickable and open in new tabs with `rel="noopener noreferrer"`.
+
+## Test 9 - Mobile responsive layout
+Viewport: mobile (375x667)
+Description: Verify portfolio is responsive on mobile devices.
+
+Steps:
+1. Navigate to the app on mobile viewport
+2. Scroll through entire page
+3. Check project cards layout
+
+Expected: Content is readable, single-column layout for project cards, text sizes are appropriate for mobile screen, no horizontal overflow.
+
+## Test 10 - Footer displays mission
+Viewport: desktop
+Description: Verify footer shows the Termux message and faith tagline.
+
+Steps:
+1. Navigate to the app
+2. Scroll to the bottom
+3. Read footer text
+
+Expected: Footer displays "Crafted from Termux. No laptop. Pure mobile-first development." and "#TheBoyGodIsHelping" tagline with copyright.
