@@ -113,8 +113,8 @@ const web3Projects: Project[] = [
 const benefits = [
   {
     icon: '⚙️',
-    title: 'Mobile-First',
-    description: 'No laptop. Pure Termux power on OnePlus 15.'
+    title: 'Innovative',
+    description: 'Modern solutions for complex problems.'
   },
   {
     icon: '✓',
@@ -146,8 +146,8 @@ const whyChoose = [
   },
   {
     icon: '📱',
-    title: 'Mobile Innovation',
-    description: 'Leading mobile-first development in blockchain'
+    title: 'Cross-Platform',
+    description: 'Building solutions that work everywhere'
   },
   {
     icon: '⚡',
@@ -209,9 +209,9 @@ function App() {
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-content">
-          <h1 className="hero-title">@thomas_young113</h1>
-          <p className="hero-subtitle">Web3 Builder • Mobile-First Developer</p>
-          <p className="hero-tagline">Building decentralized systems and AI tools from Termux</p>
+          <h1 className="hero-title">Portfolio</h1>
+          <p className="hero-subtitle">Web3 Builder</p>
+          <p className="hero-tagline">Building decentralized systems and AI tools</p>
           <div className="hero-cta">
             <button className="cta-primary" onClick={() => scrollToSection('projects')}>Explore Projects</button>
             <button className="cta-secondary" onClick={() => scrollToSection('contact')}>Get in Touch</button>
@@ -252,9 +252,8 @@ function App() {
         <h3>Built for You.</h3>
         <div className="divider-line"></div>
         <p className="about-text">
-          Mobile-first developer building Web3 infrastructure from Termux on OnePlus 15. 
-          Specializing in smart contract deployment, decentralized oracles, content automation, 
-          and security tooling. All development happens without a laptop—pure mobile power.
+          Web3 developer specializing in smart contract deployment, decentralized oracles, content automation, 
+          and security tooling.
         </p>
         <div className="about-benefits">
           {benefits.map((benefit, idx) => (
@@ -342,7 +341,7 @@ function App() {
       <section className="contact-section" id="contact">
         <h2>Connect</h2>
         <div className="divider-line"></div>
-        <p className="contact-intro">Building in public. Always open to collaborations on Web3 projects.</p>
+        <p className="contact-intro">Always open to collaborations on Web3 projects.</p>
         <div className="contact-links-container">
           <a id="social-twitter" href="https://x.com/thomas_young113" target="_blank" rel="noopener noreferrer" className="contact-link">Twitter</a>
           <a id="social-github" href="https://github.com/Thomasyoung113" target="_blank" rel="noopener noreferrer" className="contact-link">GitHub</a>
@@ -353,9 +352,7 @@ function App() {
       {/* Footer */}
       <footer className="footer">
         <div className="divider-line"></div>
-        <p>Crafted from Termux. No laptop. Pure mobile-first development.</p>
-        <p className="footer-faith">Building with faith, code, and determination. #TheBoyGodIsHelping ✨</p>
-        <p className="footer-credit">© 2026 @thomas_young113. All rights reserved.</p>
+        <p className="footer-credit">© 2026</p>
       </footer>
     </div>
   );

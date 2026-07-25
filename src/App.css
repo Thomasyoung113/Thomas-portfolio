@@ -934,3 +934,134 @@ body {
     flex-direction: column;
   }
 }
+/* Responsive Styles */
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 80px 30px;
+    min-height: auto;
+  }
+
+  .hero-title {
+    font-size: 2.8rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .featured-section,
+  .about-section,
+  .web3-section,
+  .why-choose-section,
+  .newsletter-section {
+    padding: 60px 30px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .featured-grid,
+  .web3-grid,
+  .why-grid,
+  .about-benefits {
+    grid-template-columns: 1fr;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+  }
+
+  .social-links {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+  }
+
+  .contact-links-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .portfolio {
+    padding: 0;
+  }
+
+  .contact-link {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 60px 20px;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .hero-tagline {
+    font-size: 0.9rem;
+  }
+
+  .featured-section,
+  .about-section,
+  .web3-section,
+  .why-choose-section,
+  .newsletter-section {
+    padding: 40px 20px;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .section-eyebrow {
+    font-size: 0.7rem;
+  }
+
+  .featured-card,
+  .web3-card,
+  .why-card,
+  .benefit-card {
+    padding: 20px;
+  }
+
+  .newsletter-form input,
+  .newsletter-form button {
+    width: 100%;
+    border-radius: 6px;
+  }
+
+  .newsletter-form button {
+    margin-top: 10px;
+  }
+
+  .about-text {
+    font-size: 1rem;
+    padding: 0 10px;
+  }
+
+  .contact-section {
+    padding: 40px 20px;
+  }
+
+  .footer {
+    padding: 30px 20px;
+  }
+
+  .footer-credit {
+    font-size: 0.85rem;
+  }
+}

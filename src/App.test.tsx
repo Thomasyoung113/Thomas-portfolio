@@ -5,12 +5,12 @@ import App from './App';
 describe('Portfolio', () => {
   it('renders the hero header', () => {
     render(<App />);
-    expect(screen.getByText('@thomas_young113')).toBeInTheDocument();
+    expect(screen.getByText('Portfolio')).toBeInTheDocument();
   });
 
   it('renders the hero tagline', () => {
     render(<App />);
-    expect(screen.getByText(/Building decentralized systems and AI tools from Termux/)).toBeInTheDocument();
+    expect(screen.getByText(/Building decentralized systems and AI tools/)).toBeInTheDocument();
   });
 
   it('renders the Featured Work section', () => {
@@ -36,8 +36,8 @@ describe('Portfolio', () => {
     expect(screen.getByText('Telegram').closest('a')).toHaveAttribute('href', 'https://t.me/thomas_young');
   });
 
-  it('renders the footer with faith message', () => {
+  it('renders the footer with copyright', () => {
     render(<App />);
-    expect(screen.getByText(/#TheBoyGodIsHelping/)).toBeInTheDocument();
+    expect(screen.getByText(/© 2026/)).toBeInTheDocument();
   });
 });
