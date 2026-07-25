@@ -12,10 +12,7 @@
         "test:watch": "vitest"
     },
     "dependencies": {
-        "@rollup/rollup-android-arm64": "^4.62.2",
-        "@rollup/wasm-node": "^4.62.2",
         "cors": "^2.8.5",
-        "esbuild": "^0.28.1",
         "express": "^4.21.0",
         "react": "^19.0.0",
         "react-dom": "^19.0.0"
