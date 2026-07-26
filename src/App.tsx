@@ -208,20 +208,19 @@ function App() {
     }
     setIsSubscribing(true);
     try {
-      const response = await fetch('/api/newsletter/subscribe', {
+      const response = await fetch('https://formspree.io/f/xnjeoyea', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: trimmed }),
       });
-      const data = await response.json();
-      const alreadySubscribed = data?.alreadySubscribed;
-      setSubscribeStatus('success');
-      setSubscribeMessage(
-        alreadySubscribed
-          ? "You're already on the list. Watch for the next drop, Friday at 8pm."
-          : "You're in! Watch for the next drop, Friday at 8pm."
-      );
-      setEmail('');
+      if (response.ok) {
+        setSubscribeStatus('success');
+        setSubscribeMessage("You're in! Watch for the next drop.");
+        setEmail('');
+      } else {
+        setSubscribeStatus('error');
+        setSubscribeMessage('Something went wrong. Try again.');
+      }
     } catch (err) {
       setSubscribeStatus('error');
       setSubscribeMessage('Something went wrong. Please try again in a moment.');

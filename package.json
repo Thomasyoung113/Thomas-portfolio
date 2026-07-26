@@ -12,6 +12,7 @@
         "test:watch": "vitest"
     },
     "dependencies": {
+        "@formspree/react": "^3.0.0",
         "@rollup/rollup-android-arm64": "^4.62.2",
         "@rollup/wasm-node": "^4.62.2",
         "cors": "^2.8.5",
