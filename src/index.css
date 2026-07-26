@@ -1,3 +1,4 @@
-/* Base styles are in App.css for this portfolio */
-/* Import font for ancient aesthetic */
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&family=Garamond&display=swap');
+/* Base styles live in App.css for this portfolio.
+   This file handles only the font import.
+   Pairing: Crimson Text (body) + EB Garamond (headings) — classic, warm, architectural. */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');

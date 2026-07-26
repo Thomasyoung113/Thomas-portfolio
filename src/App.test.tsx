@@ -31,9 +31,9 @@ describe('Portfolio', () => {
 
   it('renders social links', () => {
     render(<App />);
-    expect(screen.getByText('Twitter').closest('a')).toHaveAttribute('href', 'https://x.com/thomas_young113');
-    expect(screen.getByText('GitHub').closest('a')).toHaveAttribute('href', 'https://github.com/Thomasyoung113');
-    expect(screen.getByText('Telegram').closest('a')).toHaveAttribute('href', 'https://t.me/thomas_young');
+    expect(screen.getByRole('link', { name: /twitter/i })).toHaveAttribute('href', 'https://x.com/thomas_young113');
+    expect(screen.getByRole('link', { name: /github/i })).toHaveAttribute('href', 'https://github.com/Thomasyoung113');
+    expect(screen.getByRole('link', { name: /telegram contact/i })).toHaveAttribute('href', 'https://t.me/thomas_young');
   });
 
   it('renders the footer with copyright', () => {
