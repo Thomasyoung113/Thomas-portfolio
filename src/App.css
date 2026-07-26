@@ -166,3 +166,20 @@ section { padding: 100px 2rem; max-width: 1200px; margin: 0 auto; }
   .hero-cta { flex-direction: column; align-items: center; }
   .cta-primary, .cta-secondary { width: 100%; text-align: center; }
 }
+
+/* Floating Tech Logos */
+.floating-icons { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.floating-icons span { position: absolute; display: block; font-size: 2rem; opacity: 0.1; animation: floatAround 20s linear infinite; }
+.floating-icons span:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; font-size: 2.5rem; }
+.floating-icons span:nth-child(2) { top: 20%; right: 10%; animation-delay: -3s; font-size: 1.8rem; }
+.floating-icons span:nth-child(3) { top: 50%; left: 2%; animation-delay: -7s; font-size: 3rem; }
+.floating-icons span:nth-child(4) { top: 70%; right: 5%; animation-delay: -11s; font-size: 2rem; }
+.floating-icons span:nth-child(5) { top: 40%; left: 50%; animation-delay: -15s; font-size: 2.2rem; }
+.floating-icons span:nth-child(6) { top: 85%; left: 30%; animation-delay: -5s; font-size: 1.5rem; }
+.floating-icons span:nth-child(7) { top: 5%; left: 60%; animation-delay: -9s; font-size: 2.8rem; }
+.floating-icons span:nth-child(8) { top: 60%; left: 85%; animation-delay: -13s; font-size: 1.6rem; }
+@keyframes floatAround { 0% { transform: translateY(0) rotate(0deg) scale(1); } 25% { transform: translateY(-30px) rotate(90deg) scale(1.1); } 50% { transform: translateY(0) rotate(180deg) scale(1); } 75% { transform: translateY(30px) rotate(270deg) scale(0.9); } 100% { transform: translateY(0) rotate(360deg) scale(1); } }
+
+/* Scroll Reveal */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
