@@ -1,0 +1,21 @@
+{
+  "name": "Thomas Young - Portfolio",
+  "short_name": "TY Portfolio",
+  "description": "Full-stack developer portfolio of Thomas Young",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f0c29",
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

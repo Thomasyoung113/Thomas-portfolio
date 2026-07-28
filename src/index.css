@@ -1,4 +1,4 @@
 /* Base styles live in App.css for this portfolio.
    This file handles only the font import.
-   Pairing: Crimson Text (body) + EB Garamond (headings) — classic, warm, architectural. */
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+   Font: Nunito — matched from reference design (portafolio-Nahuel). */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800&display=swap');

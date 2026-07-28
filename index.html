@@ -3,37 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Web3 builder — smart contracts, decentralized oracles, and AI tooling. Portfolio of Thomas Young.">
-    <meta name="theme-color" content="#0d1117">
-    <meta name="color-scheme" content="dark">
+    <meta name="description" content="Portfolio of Thomas Young — Full-stack Developer. Web development, AI and blockchain solutions.">
+    <meta name="theme-color" content="#121f41">
+    <meta name="color-scheme" content="light dark">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
 
-    <meta property="og:title" content="Thomas Young · Web3 Builder">
-    <meta property="og:description" content="Decentralized systems, smart contracts, and AI tooling.">
+    <meta property="og:title" content="Thomas Young · Full-stack Developer">
+    <meta property="og:description" content="Full-stack developer specializing in web development, AI and blockchain.">
     <meta property="og:type" content="website">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Thomas Young · Web3 Builder">
-    <meta name="twitter:description" content="Decentralized systems, smart contracts, and AI tooling.">
+    <meta name="twitter:title" content="Thomas Young · Full-stack Developer">
+    <meta name="twitter:description" content="Full-stack developer specializing in web development, AI and blockchain.">
 
-    <!-- Preconnect to font origins -->
+    <!-- Theme script - prevents flash -->
+    <script>
+      (function() {
+        var theme = localStorage.getItem('theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.className = theme;
+      })();
+    </script>
+
+    <!-- Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Preload critical fonts -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&display=swap">
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+    <!-- Fonts -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
 
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='2' fill='%23c9954e'/%3E%3Ctext x='16' y='23' font-size='19' text-anchor='middle' fill='%230d1117' font-family='Georgia,serif'%3ET%3C/text%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='2' fill='%23c9954e'/%3E%3Ctext x='16' y='23' font-size='19' text-anchor='middle' fill='%230d1117' font-family='Georgia,serif'%3ET%3C/text%3E%3C/svg%3E">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <title>Thomas Young · Web3 Builder</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='2' fill='%2300e5fe'/%3E%3Ctext x='16' y='23' font-size='19' text-anchor='middle' fill='%23121f41' font-family='Georgia,serif'%3ET%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='2' fill='%2300e5fe'/%3E%3Ctext x='16' y='23' font-size='19' text-anchor='middle' fill='%23121f41' font-family='Georgia,serif'%3ET%3C/text%3E%3C/svg%3E">
+
+    <title>Thomas Young · Full-stack Developer</title>
 </head>
 <body>
-    <!-- Skip to content link (target) -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <!-- Preloader -->
+    <div id="preloader">
+      <div class="loader">
+        <span>THOMAS YOUNG</span>
+        <span>THOMAS YOUNG</span>
+      </div>
+    </div>
+
     <div id="root"></div>
     <script type="module" src="./src/main.tsx"></script>
 </body>

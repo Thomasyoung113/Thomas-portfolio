@@ -1,5 +1,3 @@
-import { useEffect, useRef } from "react";
-\n// @ts-nocheck
 import { useState, useRef, useEffect, useCallback } from 'react';
 import './App.css';
 
@@ -112,24 +110,6 @@ const web3Projects: Project[] = [
   }
 ];
 
-const benefits = [
-  {
-    icon: '⚙️',
-    title: 'Innovative',
-    description: 'Modern solutions for complex problems.'
-  },
-  {
-    icon: '✓',
-    title: 'Production Ready',
-    description: 'Enterprise-grade Web3 infrastructure live on mainnet.'
-  },
-  {
-    icon: '🧠',
-    title: 'AI-Integrated',
-    description: 'Content automation, security, oracles, and analytics.'
-  }
-];
-
 const whyChoose = [
   {
     icon: '💪',
@@ -177,39 +157,74 @@ function useInView(threshold = 0.15) {
   return { ref, inView };
 }
 
-// Scroll reveal
-const revealRef = useRef(null);
-useEffect(() => {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add("visible"); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
-  return () => observer.disconnect();
-}, []);
-
 function App() {
+  /* ── Theme / Dark Mode ── */
+  const [theme, setTheme] = useState<string>(() => {
+    return localStorage.getItem('theme') || 'dark';
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.remove('dark', 'light');
+    document.documentElement.classList.add(theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = useCallback(() => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  }, []);
+
+  /* ── Preloader ── */
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      document.documentElement.classList.add('loaded');
+      const preloader = document.getElementById('preloader');
+      if (preloader) {
+        preloader.classList.add('loaded');
+      }
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  /* ── Mobile menu ── */
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  /* ── About: Read More toggle ── */
+  const [showMoreBio, setShowMoreBio] = useState(false);
+
+  /* ── Newsletter state ── */
   const [email, setEmail] = useState('');
   const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [subscribeMessage, setSubscribeMessage] = useState('');
   const [isSubscribing, setIsSubscribing] = useState(false);
 
+  /* ── Intersection Observer refs ── */
   const { ref: featuredRef, inView: featuredInView } = useInView(0.1);
-  const { ref: aboutRef, inView: aboutInView } = useInView(0.15);
   const { ref: web3Ref, inView: web3InView } = useInView(0.1);
   const { ref: whyRef, inView: whyInView } = useInView(0.15);
 
+  /* ── Scroll reveal — observe .reveal elements for scroll-triggered animations ── */
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  /* ── Smooth scroll navigation ── */
   const scrollToSection = useCallback((id: string) => {
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      // Focus the section heading for keyboard users
       const heading = el.querySelector('h2, h3');
       if (heading instanceof HTMLElement) {
         heading.focus({ preventScroll: true });
       }
     }
+    setMenuOpen(false);
   }, []);
 
+  /* ── Newsletter subscribe handler ── */
   const handleSubscribe = useCallback(async () => {
     const trimmed = email.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -249,186 +264,284 @@ function App() {
 
   return (
     <>
-      {/* Skip-to-content link already sits in index.html; main-content is the anchor */}
-      <div className="portfolio" id="main-content">
-        {/* Hero Section */}
-        <section className="hero" aria-label="Introduction">
-          <div className="hero-content">
-            <h1 className="hero-title">Portfolio</h1>
-            <p className="hero-subtitle">Web3 Builder</p>
-            <p className="hero-tagline">Building decentralized systems and AI tools</p>
-            <div className="hero-cta" role="group" aria-label="Primary actions">
-              <button className="cta-primary" onClick={() => scrollToSection('projects')} aria-label="Explore Web3 projects">
-                Explore Projects
-              </button>
-              <button className="cta-secondary" onClick={() => scrollToSection('contact')} aria-label="Get in touch">
-                Get in Touch
-              </button>
-            </div>
-          </div>
-          <div className="hero-accent" aria-hidden="true">✨</div>
-        </section>
+      {/* ── Header / Nav ── */}
+      <header className="header">
+        <div className="header-logo">Thomas Young</div>
+        <nav className={`navbar ${menuOpen ? 'open' : ''}`}>
+          <ul className="nav-links">
+            <li><button onClick={() => scrollToSection('home')}>Home</button></li>
+            <li><button onClick={() => scrollToSection('about')}>About</button></li>
+            <li><button onClick={() => scrollToSection('skills')}>Skills</button></li>
+            <li><button onClick={() => scrollToSection('services')}>Services</button></li>
+            <li><button onClick={() => scrollToSection('projects')}>Projects</button></li>
+            <li><button onClick={() => scrollToSection('contact')}>Contact</button></li>
+          </ul>
+        </nav>
+        <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
+          <i className={theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon'}></i>
+        </button>
+        <button
+          className="hamburger"
+          onClick={() => setMenuOpen(prev => !prev)}
+          aria-label="Toggle navigation menu"
+          aria-expanded={menuOpen}
+        >
+          <i className="fas fa-bars"></i>
+        </button>
+      </header>
 
-        {/* Featured Projects Showcase */}
-        <section className="featured-section reveal" aria-labelledby="featured-heading" ref={featuredRef}>
-          <h2 className="section-eyebrow" id="featured-eyebrow">LATEST &amp; GREATEST</h2>
-          <h3 className="section-title" id="featured-heading" tabIndex={-1}>Featured Work</h3>
-          <div className="divider-line" aria-hidden="true"></div>
-          <div className={`featured-grid ${featuredInView ? 'anim-in' : ''}`}>
-            {featuredProjects.map((project, idx) => (
-              <article key={project.id} className="featured-card" style={{
-                animationDelay: `${idx * 0.2}s`,
-                '--card-index': idx,
-              } as React.CSSProperties}>
-                <div className="featured-icon" aria-hidden="true">{project.icon}</div>
-                <h4>{project.title}</h4>
-                <p>{project.description}</p>
-                <div className="featured-tags" aria-label="Technologies">
-                  {project.tags.map(tag => (
-                    <span key={tag} className="featured-tag">{tag}</span>
-                  ))}
-                </div>
-                {project.link && (
-                  <a href={project.link} target="_blank" rel="noopener noreferrer" className="featured-link" aria-label={`View ${project.title} project`}>
-                    View Project →
-                  </a>
-                )}
-              </article>
-            ))}
+      {/* ── Hero Section ── */}
+      <section id="home" className="hero" aria-label="Introduction">
+        <div className="hero-content">
+          <h1 className="hero-title">Hello, I am Thomas Young</h1>
+          <p className="hero-subtitle">Full-stack developer</p>
+          <div className="social-icons">
+            <a href="https://x.com/thomas_young113" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Twitter profile">
+              <i className="fab fa-twitter"></i>
+            </a>
+            <a href="https://github.com/Thomasyoung113" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="GitHub profile">
+              <i className="fab fa-github"></i>
+            </a>
+            <a href="https://t.me/thomas_young" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Telegram contact">
+              <i className="fab fa-telegram"></i>
+            </a>
+            <a href="https://wa.me/2348123916673" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="WhatsApp contact">
+              <i className="fab fa-whatsapp"></i>
+            </a>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* About Section */}
-        <section className="about-section reveal" aria-labelledby="about-heading" ref={aboutRef}>
-          <h2 id="about-heading" tabIndex={-1}>Rooted in Code.</h2>
-          <h3>Built for You.</h3>
-          <div className="divider-line" aria-hidden="true"></div>
-          <p className="about-text">
-            Web3 developer specializing in smart contract deployment, decentralized oracles, content automation, 
-            and security tooling.
-          </p>
-          <div className={`about-benefits ${aboutInView ? 'anim-in' : ''}`}>
-            {benefits.map((benefit, idx) => (
-              <div key={idx} className="benefit-card" style={{
-                animationDelay: `${idx * 0.1}s`
-              } as React.CSSProperties}>
-                <div className="benefit-icon" aria-hidden="true">{benefit.icon}</div>
-                <h4>{benefit.title}</h4>
-                <p>{benefit.description}</p>
+      {/* ── About Section ── */}
+      <section id="about" className="about-section" aria-labelledby="about-heading">
+        <h2 id="about-heading">About Me</h2>
+        <div className="about-container">
+          <div className="about-text">
+            <p>
+              I'm Thomas Young, a mobile-first full-stack developer building across Web3 infrastructure, AI tooling, and app development. I'm constantly picking up new stacks while sharpening the ones I already use, always aiming to level up my practices as a developer.
+            </p>
+            <a href="/Thomas_Young_CV.pdf" className="btn" download>
+              Download CV
+            </a>
+            <button className="btn" onClick={() => setShowMoreBio(prev => !prev)}>
+              Read More
+            </button>
+            {showMoreBio && (
+              <div className="extended-bio">
+                <p>
+                  Hi, I'm Ubong Thomas, I consider myself a person passionate about programming, AI and web development since 2020 I had the opportunity to get to know this world of the front-end and I was able to create my first web page only using HTML and CSS from there, I felt a great passion for web development, since you can do amazing things knowing how to use HTML, CSS, JavaScript and to this day I still feel that same passion when I create a web page. I consider myself a self-taught person since I like to be constantly learning day by day, both new technologies and new development methods that help me polish and raise my level of learning. I have experience working as a freelance web designer and developer, which gave me the opportunity to work on many interesting projects, adapting to the client's needs and budget, which allowed me to improve my skills and knowledge; Additionally, I have also had the opportunity to be part of some online and face-to-face courses that helped me enrich my skills and learn a little more about this beautiful world of web development.
+                </p>
               </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Web3 Projects Section */}
-        <section className="web3-section reveal" id="projects" aria-labelledby="web3-heading" ref={web3Ref}>
-          <h2 className="section-eyebrow" id="web3-eyebrow">COMPLETE ARSENAL</h2>
-          <h3 className="section-title" id="web3-heading" tabIndex={-1}>Web3 Projects</h3>
-          <div className="divider-line" aria-hidden="true"></div>
-          <div className={`web3-grid ${web3InView ? 'anim-in' : ''}`}>
-            {web3Projects.map((project, idx) => (
-              <article key={project.id} id={project.id} className="web3-card" style={{ animationDelay: `${idx * 0.1}s` } as React.CSSProperties}>
-                <div className="web3-icon" aria-hidden="true">{project.icon}</div>
-                <h4>{project.title}</h4>
-                <p>{project.description}</p>
-                <div className="web3-tags" aria-label="Technologies">
-                  {project.tags.map(tag => (
-                    <span key={tag} className="web3-tag">{tag}</span>
-                  ))}
-                </div>
-                <span className="web3-year">{project.year}</span>
-                {project.link && (
-                  <a href={project.link} target="_blank" rel="noopener noreferrer" className="web3-link" aria-label={`View ${project.title} project`}>
-                    View Project →
-                  </a>
-                )}
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* Why Choose Section */}
-        <section className="why-choose-section reveal" aria-labelledby="why-heading" ref={whyRef}>
-          <h2 id="why-heading" tabIndex={-1}>Why Choose Me?</h2>
-          <div className="divider-line" aria-hidden="true"></div>
-          <div className={`why-grid ${whyInView ? 'anim-in' : ''}`}>
-            {whyChoose.map((item, idx) => (
-              <div key={idx} className="why-card" style={{
-                animationDelay: `${(idx % 3) * 0.15}s`
-              } as React.CSSProperties}>
-                <div className="why-icon" aria-hidden="true">{item.icon}</div>
-                <h4>{item.title}</h4>
-                <p>{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Newsletter Section */}
-        <section className="newsletter-section reveal" aria-labelledby="newsletter-heading">
-          <div className="newsletter-content">
-            <h2 id="newsletter-heading">Stay Updated</h2>
-            <p>Get weekly Web3 insights and AI tool releases. Every Friday at 8pm.</p>
-            <div className="newsletter-form" role="form" aria-label="Newsletter subscription">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  if (subscribeStatus !== 'idle') setSubscribeStatus('idle');
-                }}
-                onKeyDown={handleSubscribeKeyDown}
-                aria-label="Email address for newsletter"
-                aria-describedby={subscribeStatus !== 'idle' ? 'newsletter-feedback' : undefined}
-                autoComplete="email"
-                disabled={isSubscribing}
-              />
-              <button
-                onClick={handleSubscribe}
-                disabled={isSubscribing}
-                aria-label={isSubscribing ? 'Subscribing…' : 'Subscribe to newsletter'}
-              >
-                {isSubscribing ? 'Subscribing…' : 'Subscribe'}
-              </button>
-            </div>
-            {subscribeStatus !== 'idle' && (
-              <p
-                id="newsletter-feedback"
-                className={`newsletter-feedback newsletter-feedback-${subscribeStatus}`}
-                role="status"
-                aria-live="polite"
-              >
-                {subscribeMessage}
-              </p>
             )}
           </div>
-        </section>
+          <div className="about-skills">
+            <div className="skill-item"><span className="skill-icon">🌐</span><span className="skill-label">HTML</span></div>
+            <div className="skill-item"><span className="skill-icon">🎨</span><span className="skill-label">CSS</span></div>
+            <div className="skill-item"><span className="skill-icon">⚡</span><span className="skill-label">JavaScript</span></div>
+            <div className="skill-item"><span className="skill-icon">📘</span><span className="skill-label">TypeScript</span></div>
+            <div className="skill-item"><span className="skill-icon">⚛️</span><span className="skill-label">React</span></div>
+            <div className="skill-item"><span className="skill-icon">💚</span><span className="skill-label">Node.js</span></div>
+            <div className="skill-item"><span className="skill-icon">🐍</span><span className="skill-label">Python</span></div>
+            <div className="skill-item"><span className="skill-icon">🔷</span><span className="skill-label">Solidity</span></div>
+            <div className="skill-item"><span className="skill-icon">🦀</span><span className="skill-label">Rust</span></div>
+            <div className="skill-item"><span className="skill-icon">📦</span><span className="skill-label">Git</span></div>
+          </div>
+        </div>
+      </section>
 
-        {/* Contact Section */}
-        <section className="contact-section reveal" id="contact" aria-labelledby="contact-heading">
-          <h2 id="contact-heading" tabIndex={-1}>Connect</h2>
-          <div className="divider-line" aria-hidden="true"></div>
-          <p className="contact-intro">Always open to collaborations on Web3 projects.</p>
-          <div className="contact-links-container" role="group" aria-label="Social media links">
-            <a id="social-twitter" href="https://x.com/thomas_young113" target="_blank" rel="noopener noreferrer" className="contact-link" aria-label="Twitter profile">
-              Twitter
+      {/* ── Skills Section ── */}
+      <section id="skills" className="skills-section" aria-labelledby="skills-heading">
+        <h2 id="skills-heading">Skills</h2>
+        <div className="skills-grid">
+          <div className="skill-card"><h3>Web3</h3><p>Proficient</p></div>
+          <div className="skill-card"><h3>Smart Contracts</h3><p>Proficient</p></div>
+          <div className="skill-card"><h3>Telegram Bots</h3><p>Proficient</p></div>
+          <div className="skill-card"><h3>AI/ML</h3><p>Intermediate</p></div>
+          <div className="skill-card"><h3>Frontend</h3><p>Expert</p></div>
+          <div className="skill-card"><h3>Backend</h3><p>Proficient</p></div>
+          <div className="skill-card"><h3>DevOps</h3><p>Intermediate</p></div>
+          <div className="skill-card"><h3>Mobile</h3><p>Intermediate</p></div>
+        </div>
+      </section>
+
+      {/* ── Services Section ── */}
+      <section id="services" className="services-section" aria-labelledby="services-heading">
+        <h2 id="services-heading">Services</h2>
+        <div className="services-grid">
+          <div className="service-card">
+            <i className="fas fa-paint-brush"></i>
+            <h3>UX/UI Design</h3>
+            <p>Design of attractive interfaces for both web and mobile users</p>
+          </div>
+          <div className="service-card">
+            <i className="fas fa-code"></i>
+            <h3>Web Development</h3>
+            <p>Creation of well-structured web pages, good responsive design</p>
+          </div>
+          <div className="service-card">
+            <i className="fas fa-chart-line"></i>
+            <h3>Digital Marketing</h3>
+            <p>Complete maintenance of web pages to detect and solve errors</p>
+          </div>
+          <div className="service-card">
+            <i className="fas fa-tools"></i>
+            <h3>Web Maintenance</h3>
+            <p>Complete maintenance of web pages to detect and solve errors, update content</p>
+          </div>
+          <div className="service-card">
+            <i className="fas fa-search"></i>
+            <h3>Web Positioning (SEO)</h3>
+            <p>Web positioning through SEO, so your website appears in main search results</p>
+          </div>
+          <div className="service-card">
+            <i className="fas fa-rocket"></i>
+            <h3>Website Optimization</h3>
+            <p>Complete optimization of your web page, improving loading speed</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Featured Projects ── */}
+      <section className="featured-section reveal" aria-labelledby="featured-heading" ref={featuredRef}>
+        <h2 className="section-eyebrow" id="featured-eyebrow">LATEST &amp; GREATEST</h2>
+        <h3 className="section-title" id="featured-heading" tabIndex={-1}>Featured Work</h3>
+        <div className="divider-line" aria-hidden="true"></div>
+        <div className={`featured-grid ${featuredInView ? 'anim-in' : ''}`}>
+          {featuredProjects.map((project, idx) => (
+            <article key={project.id} className="featured-card" style={{
+              animationDelay: `${idx * 0.2}s`,
+              '--card-index': idx,
+            } as React.CSSProperties}>
+              <div className="featured-icon" aria-hidden="true">{project.icon}</div>
+              <h4>{project.title}</h4>
+              <p>{project.description}</p>
+              <div className="featured-tags" aria-label="Technologies">
+                {project.tags.map(tag => (
+                  <span key={tag} className="featured-tag">{tag}</span>
+                ))}
+              </div>
+              {project.link && (
+                <a href={project.link} target="_blank" rel="noopener noreferrer" className="featured-link" aria-label={`View ${project.title} project`}>
+                  View Project →
+                </a>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Web3 Projects Section ── */}
+      <section className="web3-section reveal" id="projects" aria-labelledby="web3-heading" ref={web3Ref}>
+        <h2 className="section-eyebrow" id="web3-eyebrow">COMPLETE ARSENAL</h2>
+        <h3 className="section-title" id="web3-heading" tabIndex={-1}>Web3 Projects</h3>
+        <div className="divider-line" aria-hidden="true"></div>
+        <div className={`web3-grid ${web3InView ? 'anim-in' : ''}`}>
+          {web3Projects.map((project, idx) => (
+            <article key={project.id} id={project.id} className="web3-card" style={{ animationDelay: `${idx * 0.1}s` } as React.CSSProperties}>
+              <div className="web3-icon" aria-hidden="true">{project.icon}</div>
+              <h4>{project.title}</h4>
+              <p>{project.description}</p>
+              <div className="web3-tags" aria-label="Technologies">
+                {project.tags.map(tag => (
+                  <span key={tag} className="web3-tag">{tag}</span>
+                ))}
+              </div>
+              <span className="web3-year">{project.year}</span>
+              {project.link && (
+                <a href={project.link} target="_blank" rel="noopener noreferrer" className="web3-link" aria-label={`View ${project.title} project`}>
+                  View Project →
+                </a>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Why Choose Me Section ── */}
+      <section className="why-choose-section reveal" aria-labelledby="why-heading" ref={whyRef}>
+        <h2 id="why-heading" tabIndex={-1}>Why Choose Me?</h2>
+        <div className="divider-line" aria-hidden="true"></div>
+        <div className={`why-grid ${whyInView ? 'anim-in' : ''}`}>
+          {whyChoose.map((item, idx) => (
+            <div key={idx} className="why-card" style={{
+              animationDelay: `${(idx % 3) * 0.15}s`
+            } as React.CSSProperties}>
+              <div className="why-icon" aria-hidden="true">{item.icon}</div>
+              <h4>{item.title}</h4>
+              <p>{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Newsletter Section ── */}
+      <section className="newsletter-section reveal" aria-labelledby="newsletter-heading">
+        <div className="newsletter-content">
+          <h2 id="newsletter-heading">Stay Updated</h2>
+          <p>Get weekly Web3 insights and AI tool releases. Every Friday at 8pm.</p>
+          <div className="newsletter-form" role="form" aria-label="Newsletter subscription">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (subscribeStatus !== 'idle') setSubscribeStatus('idle');
+              }}
+              onKeyDown={handleSubscribeKeyDown}
+              aria-label="Email address for newsletter"
+              aria-describedby={subscribeStatus !== 'idle' ? 'newsletter-feedback' : undefined}
+              autoComplete="email"
+              disabled={isSubscribing}
+            />
+            <button
+              onClick={handleSubscribe}
+              disabled={isSubscribing}
+              aria-label={isSubscribing ? 'Subscribing…' : 'Subscribe to newsletter'}
+            >
+              {isSubscribing ? 'Subscribing…' : 'Subscribe'}
+            </button>
+          </div>
+          {subscribeStatus !== 'idle' && (
+            <p
+              id="newsletter-feedback"
+              className={`newsletter-feedback newsletter-feedback-${subscribeStatus}`}
+              role="status"
+              aria-live="polite"
+            >
+              {subscribeMessage}
+            </p>
+          )}
+        </div>
+      </section>
+
+      {/* ── Contact Section ── */}
+      <section id="contact" className="contact-section" aria-labelledby="contact-heading">
+        <h2 id="contact-heading">Contact</h2>
+        <div className="contact-content">
+          <p className="contact-item">
+            <a href="https://wa.me/2348123916673" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp contact">
+              <i className="fab fa-whatsapp"></i> +2348123916673
             </a>
-            <a id="social-github" href="https://github.com/Thomasyoung113" target="_blank" rel="noopener noreferrer" className="contact-link" aria-label="GitHub profile">
-              GitHub
+          </p>
+          <div className="contact-links">
+            <a href="https://x.com/thomas_young113" target="_blank" rel="noopener noreferrer" className="contact-link" aria-label="Twitter profile">
+              <i className="fab fa-twitter"></i>
             </a>
-            <a id="social-telegram" href="https://t.me/thomas_young" target="_blank" rel="noopener noreferrer" className="contact-link" aria-label="Telegram contact">
-              Telegram
+            <a href="https://github.com/Thomasyoung113" target="_blank" rel="noopener noreferrer" className="contact-link" aria-label="GitHub profile">
+              <i className="fab fa-github"></i>
+            </a>
+            <a href="https://t.me/thomas_young" target="_blank" rel="noopener noreferrer" className="contact-link" aria-label="Telegram contact">
+              <i className="fab fa-telegram"></i>
             </a>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Footer */}
-        <footer className="footer" role="contentinfo">
-          <div className="divider-line" aria-hidden="true"></div>
-          <p className="footer-credit">&copy; 2026 Thomas Young</p>
-        </footer>
-      </div>
+      {/* ── Footer ── */}
+      <footer className="footer" role="contentinfo">
+        <p>page created by thomas young &copy; 2026. All Rights Reserved</p>
+      </footer>
     </>
   );
 }
