@@ -107,6 +107,15 @@ const web3Projects: Project[] = [
     link: 'https://github.com/Thomasyoung113/convallax-amm-script',
     year: '2026',
     icon: '📊'
+  },
+  {
+    id: 'gem-alert-bot',
+    title: 'Gem Alert Bot',
+    description: 'Solana memecoin gem spotter — scans DexScreener, verifies with RugCheck, alerts via Telegram. Features smart money detection, insider sell tracking, self-learning engine, and web dashboard.',
+    tags: ['Python', 'Solana', 'Telegram', 'DeFi'],
+    link: 'https://github.com/Thomasyoung113/memecoin-alert-bot',
+    year: '2026',
+    icon: '💎'
   }
 ];
 
